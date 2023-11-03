@@ -59,3 +59,37 @@ python manage.py migrate
 ```bash
 python manage.py runserver
 ```
+
+## Paso 6: Creamos la aplicación
+
+```bash
+python manage.py startapp tasks
+```
+
+## Paso 7: Registramos la aplicación en settings.py
+
+```python
+INSTALLED_APPS = [
+    ...
+    'tasks',
+]
+```
+
+## Paso 8: Creamos el modelo
+Añadimos el siguiente código en models.py después del comentario
+```python
+class Task(models.Model):
+    title = models.CharField(max_length=200)
+    description = models.TextField()
+    completed = models.BooleanField(default=False)
+
+    def __str__(self):
+        return self.title
+```
+
+## Paso 9: Aplicamos los cambios en la base de datos
+
+```bash
+python manage.py makemigrations
+python manage.py migrate
+```
