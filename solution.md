@@ -147,3 +147,29 @@ urlpatterns = [
 ]
 ```
 
+## Paso 14: Creamos la plantilla
+
+Creamos la carpeta templates y dentro de ella la carpeta tasks. Creamos el archivo task_list.html, debería quedar así tasks/templates/tasks/task_list.html
+
+En task_list.html añadimos el siguiente código
+
+```html
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Task List</title>
+	</head>
+	<body>
+		<h1>Task List</h1>
+		<ul>
+			{% for task in tasks %}
+			<li>
+				{{ task.title }} - {{ task.description }} - {{
+				task.completed | yesno:"Realizado","Pendiente"}}
+			</li>
+			{% endfor %}
+		</ul>
+	</body>
+</html>
+```
