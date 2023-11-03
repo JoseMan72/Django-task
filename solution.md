@@ -76,7 +76,9 @@ INSTALLED_APPS = [
 ```
 
 ## Paso 8: Creamos el modelo
+
 Añadimos el siguiente código en models.py después del comentario
+
 ```python
 class Task(models.Model):
     title = models.CharField(max_length=200)
@@ -93,3 +95,55 @@ class Task(models.Model):
 python manage.py makemigrations
 python manage.py migrate
 ```
+
+## Paso 10: Registramos el modelo
+
+```python
+from django.contrib import admin
+from .models import Task
+
+admin.site.register(Task)
+```
+
+## Paso 11: Creamos el superusuario
+
+```bash
+python manage.py createsuperuser
+```
+
+## Paso 12: Creamos la vista
+
+```python
+from django.shortcuts import render
+from .models import Task
+
+def index(request):
+    tasks = Task.objects.all()
+    return render(request, 'tasks/task_list.html', {'tasks': tasks})
+```
+
+## Paso 13: Registramos la vista
+
+Creamos el archivo urls.py en la carpeta tasks y añadimos el siguiente código
+
+```python
+from django.urls import path
+from . import views
+
+urlpatterns = [
+    path('', views.task_list, name='task_list'),
+]
+```
+
+Añadimos la ruta en urls.py
+
+```python
+from django.contrib import admin
+from django.urls import path, include
+
+urlpatterns = [
+    path('admin/', admin.site.urls),
+    path('', include('tasks.urls')),
+]
+```
+
