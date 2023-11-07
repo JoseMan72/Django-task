@@ -165,9 +165,11 @@ En task_list.html añadimos el siguiente código
 		<ul>
 			{% for task in tasks %}
 			<li>
-				{{ task.title }} - {{ task.description }} - {{
-				task.completed | yesno:"Realizado","Pendiente"}}
+				{{ task.title }} - {{ task.description }} - 
+				{{ task.completed|yesno:"Realizado,Pendiente" }}
 			</li>
+			{% empty %}
+			<li>No hay tareas por hacer.</li>
 			{% endfor %}
 		</ul>
 	</body>
