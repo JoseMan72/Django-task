@@ -8,7 +8,12 @@
 		<h1>Task List</h1>
 		<ul>
 			{% for task in tasks %}
-			<li>{{ task.title }} - {{ task.description }} - {{ task.completed }}</li>
+			<li>
+				{{ task.title }} - {{ task.description }} - 
+				{{ task.completed|yesno:"Realizado,Pendiente" }}
+			</li>
+			{% empty %}
+			<li>No hay tareas por hacer.</li>
 			{% endfor %}
 		</ul>
 	</body>
