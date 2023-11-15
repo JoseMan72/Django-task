@@ -6,12 +6,31 @@
 	</head>
 	<body>
 		<h1>Task List</h1>
+		<form action="{% url 'task_list'%}" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Nueva tarea</button>
+		</form>
+		<h2>Tareas pendientes</h2>
 		<ul>
 			{% for task in tasks %}
+			{% if not task.completed %}
 			<li>
-				{{ task.title }} - {{ task.description }} - 
-				{{ task.completed|yesno:"Realizado,Pendiente" }}
+				<a href="{% url 'task_details' pk=task.pk %}">{{ task.title }}</a>
 			</li>
+			{% endif %}
+			{% empty %}
+			<li>No hay tareas pendientes.</li>
+			{% endfor %}
+		</ul>
+		<h2>Tareas completadas</h2>
+		<ul>
+			{% for task in tasks %}
+			{% if task.completed %}
+			<li>
+				<a href="{% url 'task_details' pk=task.pk %}">{{ task.title }}</a>
+			</li>
+			{% endif %}
 			{% empty %}
 			<li>No hay tareas por hacer.</li>
 			{% endfor %}
