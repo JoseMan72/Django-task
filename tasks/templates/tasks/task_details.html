@@ -10,5 +10,7 @@
 		<p>{{ task.completed | yesno:"Completada,Pendiente" }}</p>
 		<br>
 		<a href="{% url 'task_list' %}">Volver a la lista de tareas</a>
+		<br>
+		<a href="{% url 'task_update' pk=task.pk %}">Editar</a>
 	</body>
 </html>

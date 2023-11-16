@@ -43,21 +43,38 @@ class TaskList(View):
 '''
 # Uso de clase basada en vistas
 
-class TaskList(View):
-    def post(self, request):
-        form = TaskForm(request.POST)
-        if form.is_valid():
-            form.save()
-            return redirect('task_list')
-        tasks = Task.objects.all()
-        return render(request, 'tasks/task_list.html', {'tasks': tasks, 'form': form})
-    
+class TaskList(View): # Vista para listar las tareas
     def get(self, request):
-        form = TaskForm()
         tasks = Task.objects.all()
-        return render(request, 'tasks/task_list.html', {'tasks': tasks, 'form': form})
+        return render(request, 'tasks/task_list.html', {'tasks': tasks})
 
 class TaskDetail(View): # Vista para ver los detalles de una tarea
     def get(self, request, pk):
         task = Task.objects.get(id=pk)
         return render(request, 'tasks/task_details.html', {'task': task})
+
+class TaskCreate(View): # Vista para crear una tarea
+    def get(self, request):
+        form = TaskForm()
+        return render(request, 'tasks/task_create.html', {'form': form})
+    
+    def post(self, request):
+        form = TaskForm(request.POST)
+        if form.is_valid():
+            form.save()
+            return redirect('task_list')
+        return render(request, 'tasks/task_create.html', {'form': form})
+
+class TaskUpdate(View): # Vista para actualizar una tarea
+    def get(self, request, pk):
+        task = Task.objects.get(id=pk)
+        form = TaskForm(instance=task)
+        return render(request, 'tasks/task_update.html', {'form': form, 'task': task})
+    
+    def post(self, request, pk):
+        task = Task.objects.get(id=pk)
+        form = TaskForm(request.POST, instance=task)
+        if form.is_valid():
+            form.save()
+            return redirect('task_list')
+        return render(request, 'tasks/task_update.html', {'form': form, 'task': task})

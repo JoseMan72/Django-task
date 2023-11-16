@@ -1,0 +1,16 @@
+<!DOCTYPE html>
+<html lang="es">
+	<head>
+		<meta charset="UTF-8" />
+		<title>Task</title>
+	</head>
+	<body>
+		<form action="{% url 'task_update' pk=task.pk %}" method="post">
+			{% csrf_token %}
+			{{ form.as_p }}
+			<button type="submit">Editar</button>
+		</form>
+		<br>
+		<a href="{% url 'task_list' %}">Volver a la lista de tareas</a>
+	</body>
+</html>

@@ -6,11 +6,7 @@
 	</head>
 	<body>
 		<h1>Task List</h1>
-		<form action="{% url 'task_list'%}" method="post">
-			{% csrf_token %}
-			{{ form.as_p }}
-			<button type="submit">Nueva tarea</button>
-		</form>
+		<a href="{% url 'task_create' %}">Nueva tarea</a>
 		<h2>Tareas pendientes</h2>
 		<ul>
 			{% for task in tasks %}
